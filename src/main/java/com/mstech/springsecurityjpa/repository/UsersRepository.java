@@ -1,11 +1,12 @@
-// package com.mstech.springsecurityjpa.repository;
+package com.mstech.springsecurityjpa.repository;
 
-// import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-// import com.mstech.springsecurityjpa.entities.Users;
-// import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.mstech.springsecurityjpa.models.Users;
 
 
-// public interface UsersRepository extends JpaRepository<Users, Integer> {
-//     Optional<Users> findByUserName(String userName);
-// }
+public interface UsersRepository extends JpaRepository<Users, Integer> {
+    Optional<Users> findByUserName(String userName);
+}

@@ -1,36 +1,29 @@
 package com.mstech.springsecurityjpa.service;
 
-import java.util.Arrays;
-// import com.mstech.springsecurityjpa.entities.Users;
-// import com.mstech.springsecurityjpa.repository.UsersRepository;
+import com.mstech.springsecurityjpa.models.MyUserDetails;
+import com.mstech.springsecurityjpa.models.Users;
+import com.mstech.springsecurityjpa.repository.UsersRepository;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class MyUserDetailsService implements UserDetailsService {
 
-//   private final UsersRepository usersRepository;
-
-//   public MyUserDetailsService(UsersRepository usersRepository) {
-//     this.usersRepository = usersRepository;
-//   }
+  @Autowired // this autowire is required here.
+  UsersRepository usersRepository;
 
   @Override
-  public UserDetails loadUserByUsername(String username)
+  public UserDetails loadUserByUsername(String userName)
     throws UsernameNotFoundException {
-    // Users loadedUsers = usersRepository
-    //   .findByUserName(username)
-    //   .orElseThrow(() -> new UsernameNotFoundException("Could not Found!"));
+    Optional<Users> user = usersRepository.findByUserName(userName);
+    // retrive the user credentials from the database with the help of username provided.
 
-    // return new User(
-    //   loadedUsers.getUserName(),
-    //   loadedUsers.getPassword(),
-    //   false,
-    //   false,
-    //   false,
-    //   false,
-    //   Collections.singleton(new SimpleGrantedAuthority(loadedUsers.getRoles()))
-    // );
-    return new MyUserDetails();
+    user.orElseThrow(() ->
+      new UsernameNotFoundException("Not found: " + userName)
+    );
+
+    return user.map(MyUserDetails::new).get();
   }
 }

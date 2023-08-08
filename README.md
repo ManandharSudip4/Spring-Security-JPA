@@ -4,7 +4,10 @@
     Previously i configured InMemory Authentication and JDBC
     Authentication using H2 Database which you can find in this
     follwing repos.
-
+    
+   1. [In-Memory Authentication]{https://github.com/ManandharSudip4/Spring-Security-Basics}
+   2. [JDBC Authentication]{https://github.com/ManandharSudip4/Simple-JDBC-Authentication}
+   
     So, here i tried to configure this Authentication system
     with external database using JPA.
 

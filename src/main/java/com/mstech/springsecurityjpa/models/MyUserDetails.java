@@ -26,13 +26,13 @@ public class MyUserDetails implements UserDetails {
         .collect(Collectors.toList());
   }
 
-  // user.getRoles().split(","): This takes the comma-separated roles string from the Users object and 
+  // user.getRoles().split(","): This takes the comma-separated roles string from the Users object and
   //   splits it into an array of individual role strings.
-  // .stream(): This converts the array into a stream, allowing you to perform operations on 
+  // .stream(): This converts the array into a stream, allowing you to perform operations on
   //   each element.
-  // .map(SimpleGrantedAuthority::new): This maps each role string to a SimpleGrantedAuthority object. 
+  // .map(SimpleGrantedAuthority::new): This maps each role string to a SimpleGrantedAuthority object.
   //   A SimpleGrantedAuthority is an implementation of the GrantedAuthority interface provided by Spring Security. It represents a single authority (role) that a user possesses.
-  // .collect(Collectors.toList()): This collects the SimpleGrantedAuthority objects from the stream and 
+  // .collect(Collectors.toList()): This collects the SimpleGrantedAuthority objects from the stream and
   //   gathers them into a list.
 
   @Override

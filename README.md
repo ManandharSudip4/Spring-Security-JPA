@@ -96,4 +96,6 @@
    - If the authentication fails, the user is denied access and may be redirected to an error page or the login page again.
 
 
-
+## JWT Configuration
+   So, i configured jwt for /authenticate end point 
+   - whenever we send post request on /authenticate with username and password in body, we get response with JWT token.

@@ -1,6 +1,8 @@
 package com.mstech.springsecurityjpa.security;
 
+import com.mstech.springsecurityjpa.auth.JwtRequestFilter;
 import com.mstech.springsecurityjpa.service.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,9 +11,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +39,9 @@ public class SecurityConfiguration {
   public SecurityConfiguration(MyUserDetailsService myUserDetailsService) {
     this.userDetailsService = myUserDetailsService;
   }
+
+  @Autowired
+  private JwtRequestFilter jwtRequestFilter;
 
   @SuppressWarnings("deprecation")
   @Bean
@@ -75,6 +82,13 @@ public class SecurityConfiguration {
           .permitAll()
           .anyRequest()
           .authenticated()
+      )
+      .sessionManagement(manager ->
+        manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      )
+      .addFilterBefore(
+        jwtRequestFilter,
+        UsernamePasswordAuthenticationFilter.class
       )
       .formLogin(Customizer.withDefaults());
     return http.build();
